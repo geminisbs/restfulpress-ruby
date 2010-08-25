@@ -1,0 +1,71 @@
+= Resftul Press
+
+Ruby client for the Resful Press API. Uses the YAJL library for fast JSON decoding.
+
+== About Restful Press
+
+Restful Press is an automated service for converting your app's views into PDFs. There is no special PDF DSL required.
+You simply write your views in HAML, ERB or Mustache as you always have and Restful Press takes care of the rest.
+
+Each request to render your PDF is referred to as a *job* by the Restful Press service. This client follows that nomenclature.
+
+== Install
+
+  gem install restful_press
+  
+== Usage
+
+=== Initialize the client
+
+  require 'restful_press'
+  ➔ true
+  
+  RestfulPress::Client.set_credentials('my_api_key')
+  ➔ true
+  
+=== View your jobs
+
+  RestfulPress::Client.get_jobs
+  ➔ [{:complete=>false, :id=>9, :filename=>"export.pdf"}, {:complete=>true, :id=>10, :filename=>"products.pdf"}]
+  
+  RestfulPress::Client.get_job(9)
+  ➔ {:complete=>false, :id=>9, :filename=>"export.pdf"}
+  
+  RestfulPress::Client.job_url(9)
+  ➔ "http://restfulpress.com/jobs/9/download"
+  
+  RestfulPress::Client.job_complete?(9)
+  ➔ false
+  
+=== Deleting jobs
+
+  RestfulPress::Client.delete_job(9)
+  ➔ true
+  
+=== Creating Jobs
+
+  RestfulPress::Client.add_job(:html_doc => "<html><h1>Hello,</h1> this is a test</html>", :pdf_options => { :page_size => "Letter" })
+  ➔ true
+  
+Note: For a full list of supported PDF options, please see the *Supported PDF Options* section of this document
+
+== Integration with Rails
+
+Coming soon.
+
+== Supported PDF Options
+
+Coming soon.
+
+== Dependencies
+
+* {yajl-ruby}[http://github.com/brianmario/yajl-ruby] (Ruby wrapper around the great {yajl}[http://lloyd.github.com/yajl])
+* {rest-client}[http://github.com/archiloque/rest-client]
+
+== Copyright
+
+Copyright (c) 2010 Gemini SBS. See LICENSE for details.
+
+== Authors
+
+* {Mauricio Gomes}[http://github.com/mgomes]
